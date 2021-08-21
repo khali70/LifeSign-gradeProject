@@ -27,11 +27,13 @@ export default () => {
           Life Sign 😊
         </Text>
         <Button
+          size="large"
           style={styles.likeButton}
           onPress={() => navigation.push('Listen')}>
           Listen
         </Button>
         <Button
+          size="large"
           style={styles.likeButton}
           onPress={() => navigation.push('Speak')}>
           Speak

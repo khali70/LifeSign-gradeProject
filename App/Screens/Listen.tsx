@@ -10,6 +10,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Button,
   Divider,
+  Icon,
   Layout,
   Text,
   TopNavigation,
@@ -28,7 +29,10 @@ export default () => {
         <Text style={styles.text} category="h1">
           Listen Screen
         </Text>
-        <Button style={styles.likeButton} onPress={() => navigation.goBack()}>
+        <Button
+          accessoryLeft={<Icon name="home" />}
+          style={styles.likeButton}
+          onPress={() => navigation.goBack()}>
           Go Home
         </Button>
       </Layout>
