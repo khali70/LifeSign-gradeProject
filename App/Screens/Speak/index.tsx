@@ -16,24 +16,40 @@ import {
   TopNavigation,
 } from '@ui-kitten/components';
 
+import useTts from './useTts';
+
 export default () => {
+  const {state, setState, actions} = useTts();
+  React.useEffect(() => {
+    state.text = `we will not forget what happen with abdalah    `;
+  }, []);
   const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Listen'>>();
-  // TODO reset nav stack , add back icon
+    useNavigation<StackNavigationProp<HomeStackPrams, 'Speak'>>();
+  const speak = async () => {
+    await actions.readText()
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title="Listen" alignment="center" />
+      <TopNavigation title="Speak" alignment="center" />
       <Divider />
 
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
-          Listen Screen
+          Hardware Screen
         </Text>
+        <Text>Tts voices {state.voices.length}</Text>
+        <Text>TTS Status {state.ttsStatus}</Text>
         <Button
+          style={styles.goHome}
           accessoryLeft={<Icon name="home" />}
-          style={styles.likeButton}
           onPress={() => navigation.goBack()}>
           Go Home
+        </Button>
+        <Button
+          style={styles.speak}
+          accessoryLeft={<Icon name="volume-up" />}
+          onPress={() => speak()}>
+          Speak
         </Button>
       </Layout>
     </SafeAreaView>
@@ -49,7 +65,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
   },
-  likeButton: {
+  goHome: {
     marginVertical: 16,
+  },
+  speak: {
+    marginVertical: 16,
+    paddingHorizontal: 20,
   },
 });

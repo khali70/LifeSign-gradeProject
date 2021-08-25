@@ -18,19 +18,20 @@ import {
 
 export default () => {
   const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Speak'>>();
+    useNavigation<StackNavigationProp<HomeStackPrams, 'Listen'>>();
+  // TODO reset nav stack , add back icon
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title="Speak" alignment="center" />
+      <TopNavigation title="Listen" alignment="center" />
       <Divider />
 
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
-          Soon after Listen mode ...
+          Soon listen mod
         </Text>
         <Button
-          style={styles.likeButton}
           accessoryLeft={<Icon name="home" />}
+          style={styles.likeButton}
           onPress={() => navigation.goBack()}>
           Go Home
         </Button>
