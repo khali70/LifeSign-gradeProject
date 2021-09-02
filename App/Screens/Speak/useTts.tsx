@@ -44,9 +44,6 @@ const useTts = () => {
     Tts.setDefaultPitch(state.speechPitch);
     Tts.getInitStatus().then(initTts);
   }, []);
-  useEffect(() => {
-    console.log(state.text);
-  }, [state.text]);
   const initTts = async () => {
     const voices = await Tts.voices();
     const availableVoices = voices
