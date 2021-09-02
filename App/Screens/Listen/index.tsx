@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,6 +12,7 @@ import {
   Text,
   TopNavigation,
 } from '@ui-kitten/components';
+import I18n from '../../i18n';
 
 export default () => {
   const navigation =
@@ -22,7 +20,7 @@ export default () => {
   // TODO reset nav stack , add back icon
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title="Listen" alignment="center" />
+      <TopNavigation title={I18n.t('Listen')} alignment="center" />
       <Divider />
 
       <Layout style={styles.container}>

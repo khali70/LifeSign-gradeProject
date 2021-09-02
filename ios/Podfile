@@ -14,6 +14,8 @@ target 'LifeSign' do
 
   pod 'TextToSpeech', :path => '../node_modules/react-native-tts'
 
+  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
+
   target 'LifeSignTests' do
     inherit! :complete
     # Pods for testing

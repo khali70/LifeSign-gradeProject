@@ -13,6 +13,7 @@ import {
   Text,
   TopNavigation,
 } from '@ui-kitten/components';
+import I18n from '../../i18n';
 
 import useTts from './useTts';
 
@@ -34,25 +35,25 @@ export default () => {
   };
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title="Speak" alignment="center" />
+      <TopNavigation title={I18n.t('Speak')} alignment="center" />
       <Divider />
 
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
-          Hardware Screen
+          {I18n.t('HWtitle')}
         </Text>
         <Input value={tts} onChangeText={e => setTTs(e)} />
         <Button
           style={styles.goHome}
           accessoryLeft={<Icon name="home" />}
           onPress={() => navigation.goBack()}>
-          Go Home
+          {I18n.t('GoHome')}
         </Button>
         <Button
           style={styles.speak}
           accessoryLeft={<Icon name="volume-up" />}
           onPress={() => speak()}>
-          Speak
+          {I18n.t('Speak')}
         </Button>
       </Layout>
     </SafeAreaView>
