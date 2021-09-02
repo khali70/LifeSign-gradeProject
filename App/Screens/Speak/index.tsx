@@ -18,6 +18,7 @@ import useTts from './useTts';
 
 export default () => {
   const {state, actions} = useTts();
+  // FIXME not the best practice to setState
   const [tts, setTTs] = React.useState(state.text);
   const setText = (text: string) => {
     state.text = text;
