@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -11,6 +8,7 @@ import {
   Button,
   Divider,
   Icon,
+  Input,
   Layout,
   Text,
   TopNavigation,
@@ -19,14 +17,19 @@ import {
 import useTts from './useTts';
 
 export default () => {
-  const {state, setState, actions} = useTts();
+  const {state, actions} = useTts();
+  const [tts, setTTs] = React.useState(state.text);
+  const setText = (text: string) => {
+    state.text = text;
+  };
   React.useEffect(() => {
-    state.text = `we will not forget what happen with abdalah    `;
+    setTTs('we will not forget what happen with abdalah');
   }, []);
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Speak'>>();
   const speak = async () => {
-    await actions.readText()
+    setText(tts);
+    actions.readText();
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -37,8 +40,7 @@ export default () => {
         <Text style={styles.text} category="h1">
           Hardware Screen
         </Text>
-        <Text>Tts voices {state.voices.length}</Text>
-        <Text>TTS Status {state.ttsStatus}</Text>
+        <Input value={tts} onChangeText={e => setTTs(e)} />
         <Button
           style={styles.goHome}
           accessoryLeft={<Icon name="home" />}
