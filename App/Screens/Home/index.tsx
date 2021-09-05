@@ -47,22 +47,24 @@ export default () => {
   return (
     <Warper title={I18n.t('Speak')} root>
       <Layout style={styles.container}>
-        <Text style={styles.text} category="h1">
-          {I18n.t('HWtitle')}
-        </Text>
-        <Input value={tts} onChangeText={e => setTTs(e)} />
-        <Button
-          style={styles.goHome}
-          accessoryLeft={<Icon name="home" />}
-          onPress={() => navigation.push('Listen')}>
-          {I18n.t('GoListen')}
-        </Button>
-        <Button
-          style={styles.speak}
-          accessoryLeft={<Icon name="volume-up" />}
-          onPress={() => speak()}>
-          {I18n.t('Speak')}
-        </Button>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Input value={tts} onChangeText={e => setTTs(e)} />
+            <Button
+              style={styles.goHome}
+              accessoryLeft={<Icon name="home" />}
+              onPress={() => navigation.push('Listen')}>
+              {I18n.t('GoListen')}
+            </Button>
+            <Button
+              style={styles.speak}
+              accessoryLeft={<Icon name="volume-up" />}
+              onPress={() => speak()}>
+              {I18n.t('Speak')}
+            </Button>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </Layout>
     </Warper>
   );
