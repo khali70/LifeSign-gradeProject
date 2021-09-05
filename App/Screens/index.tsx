@@ -1,5 +1,4 @@
-import Home from './Home';
 import Listen from './Listen';
-import Speak from './Speak';
+import Home from './Home';
 
-export {Home, Listen, Speak};
+export {Home, Listen};

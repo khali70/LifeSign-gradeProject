@@ -13,16 +13,14 @@ import {
   TopNavigation,
 } from '@ui-kitten/components';
 import I18n from '../../i18n';
+import Warper from '../../components/HeaderWarper';
 
 export default () => {
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Listen'>>();
   // TODO reset nav stack , add back icon
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title={I18n.t('Listen')} alignment="center" />
-      <Divider />
-
+    <Warper title={I18n.t('Listen')}>
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
           Soon listen mod
@@ -31,10 +29,10 @@ export default () => {
           accessoryLeft={<Icon name="home" />}
           style={styles.likeButton}
           onPress={() => navigation.goBack()}>
-          Go Home
+          Go back
         </Button>
       </Layout>
-    </SafeAreaView>
+    </Warper>
   );
 };
 

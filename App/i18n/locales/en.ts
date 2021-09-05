@@ -1,6 +1,6 @@
 const en = {
   HWtitle: 'Hardware',
-  GoHome: 'Go Home',
+  GoListen: 'Speaking Mode',
   Speak: 'Speak',
   Listen: 'Listen',
 };

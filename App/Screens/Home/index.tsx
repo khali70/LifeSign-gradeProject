@@ -1,8 +1,12 @@
 import React from 'react';
 
 import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   StyleSheet,
+  View,
 } from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
@@ -10,36 +14,57 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {
   Button,
   Divider,
+  Icon,
+  Input,
   Layout,
   Text,
   TopNavigation,
+  TopNavigationAction,
 } from '@ui-kitten/components';
+import I18n from '../../i18n';
+
+import useTts from './useTts';
+import Warper from '../../components/HeaderWarper';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 export default () => {
+  const {state, actions} = useTts();
+  // FIXME not the best practice to setState
+  const [tts, setTTs] = React.useState(state.text);
+  const setText = (text: string) => {
+    state.text = text;
+  };
+  React.useEffect(() => {
+    setTTs('we will not forget what happen with abdalah');
+  }, []);
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
+  const speak = async () => {
+    setText(tts);
+    actions.readText();
+  };
+  //
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <TopNavigation title="Home" alignment="center" />
-      <Divider />
+    <Warper title={I18n.t('Speak')} root>
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
-          Life Sign 😊
+          {I18n.t('HWtitle')}
         </Text>
+        <Input value={tts} onChangeText={e => setTTs(e)} />
         <Button
-          size="large"
-          style={styles.likeButton}
+          style={styles.goHome}
+          accessoryLeft={<Icon name="home" />}
           onPress={() => navigation.push('Listen')}>
-          Listen
+          {I18n.t('GoListen')}
         </Button>
         <Button
-          size="large"
-          style={styles.likeButton}
-          onPress={() => navigation.push('Speak')}>
-          Speak
+          style={styles.speak}
+          accessoryLeft={<Icon name="volume-up" />}
+          onPress={() => speak()}>
+          {I18n.t('Speak')}
         </Button>
       </Layout>
-    </SafeAreaView>
+    </Warper>
   );
 };
 
@@ -52,7 +77,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
   },
-  likeButton: {
+  goHome: {
     marginVertical: 16,
+  },
+  speak: {
+    marginVertical: 16,
+    paddingHorizontal: 20,
   },
 });
