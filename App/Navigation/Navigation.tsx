@@ -3,13 +3,14 @@ import React from 'react';
 import {NavigationContainer, Theme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Home, Listen} from '../Screens';
+import {Home, About, Listen} from '../Screens';
 
 const HomeStack = createStackNavigator<HomeStackPrams>();
 const HomeStackNavigator: React.FC<{}> = () => (
   <HomeStack.Navigator screenOptions={{headerShown: false}}>
     <HomeStack.Screen name="Home" component={Home} />
     <HomeStack.Screen name="Listen" component={Listen} />
+    <HomeStack.Screen name="About" component={About} />
   </HomeStack.Navigator>
 );
 
