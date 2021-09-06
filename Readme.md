@@ -11,11 +11,11 @@
 
 ## settings
 
-- [ ] redux support
+- [x] redux support
 - [ ] settings screen
 - [ ] theme
 - [ ] tts lang
-- [ ] local lang
+- [x] local lang
 
 # future work :rocket:
 

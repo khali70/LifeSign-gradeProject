@@ -1,73 +1,44 @@
+import React from 'react';
+
+import {Dimensions, StyleSheet, View} from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Button, Icon, Input, Layout} from '@ui-kitten/components';
-import React from 'react';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Linking,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import Warper from '../../components/HeaderWarper';
+import {Button, Icon, Layout, Text} from '@ui-kitten/components';
 import I18n from '../../i18n';
-import useTts from './useTts';
+import Warper from '../../components/HeaderWarper';
 
 export default () => {
-  const {state, actions} = useTts();
-  React.useEffect(() => {
-    actions.setText('type the text you want to say here');
-  }, []);
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
-
+  type screen = {
+    name: string;
+    route: keyof HomeStackPrams;
+    icon?: JSX.Element;
+  }[];
+  const screens: screen = [
+    {name: 'Listening Mod', route: 'Listen', icon: <Icon name="volume-up" />},
+    {name: 'Speaking mod', route: 'Speak', icon: <Icon name="mic" />},
+    {name: 'About us', route: 'About', icon: <Icon name="info" />},
+    {name: 'Help', route: 'Help', icon: <Icon name="question-mark-circle" />},
+  ];
   return (
-    <Warper title={I18n.t('Speak')} root>
+    <Warper title={I18n.t('Listen')} root>
       <Layout style={styles.container}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <TouchableWithoutFeedback
-            style={styles.container}
-            onPress={Keyboard.dismiss}>
-            <View style={styles.inputContainer}>
-              <Input
-                value={state.text}
-                onChangeText={e => actions.setText(e)}
-              />
-              <Button
-                style={styles.inputBtn}
-                size="small"
-                accessoryLeft={<Icon name="volume-up" />}
-                onPress={() => actions.readText()}
-              />
-            </View>
-            <View>
-              <Button
-                style={styles.btn}
-                accessoryLeft={<Icon name="mic" />}
-                onPress={() => navigation.push('Listen')}>
-                {I18n.t('GoListen')}
-              </Button>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <Button
-                style={[styles.btn, styles.helpBtn]}
-                accessoryLeft={<Icon name="phone" />}
-                onPress={() => Linking.openURL(`tel:911`)}>
-                call 911
-              </Button>
-              <Button
-                style={[styles.btn, styles.helpBtn]}
-                accessoryLeft={<Icon name="navigation-2" />}
-                onPress={() => Linking.openURL('geo:0,0?q=hospitals')}>
-                hospitals
-              </Button>
-            </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+        <View style={styles.mainView}>
+          {screens.map((screen, id) => (
+            <Button
+              key={id}
+              style={styles.btn}
+              status="basic"
+              size="giant"
+              onPress={() => navigation.push(screen.route)}
+              accessoryLeft={screen.icon ? screen.icon : undefined}
+              appearance="outline">
+              {screen.name}
+            </Button>
+          ))}
+        </View>
       </Layout>
     </Warper>
   );
@@ -79,23 +50,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  inputContainer: {
+  mainView: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    flex: 1,
     textAlign: 'center',
   },
-  inputBtn: {
-    paddingVertical: 10,
-    marginLeft: 10,
-  },
-  btn: {
+  likeButton: {
     marginVertical: 16,
   },
-  helpBtn: {
-    flex: 1,
-    marginHorizontal: 10,
+  btn: {
+    width: 200,
+    height: 200,
+    flexBasis: Dimensions.get('window').width / 2 - 20,
+    margin: 5,
   },
 });
