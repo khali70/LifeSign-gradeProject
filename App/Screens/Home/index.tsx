@@ -1,32 +1,20 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {Button, Icon, Input, Layout} from '@ui-kitten/components';
 import React from 'react';
-
 import {
   Keyboard,
   KeyboardAvoidingView,
+  Linking,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View,
 } from 'react-native';
-
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {
-  Button,
-  Divider,
-  Icon,
-  Input,
-  Layout,
-  Text,
-  TopNavigation,
-  TopNavigationAction,
-} from '@ui-kitten/components';
-import I18n from '../../i18n';
-
-import useTts from './useTts';
-import Warper from '../../components/HeaderWarper';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {Linking} from 'react-native';
+import Warper from '../../components/HeaderWarper';
+import I18n from '../../i18n';
+import useTts from './useTts';
+
 export default () => {
   const {state, actions} = useTts();
   React.useEffect(() => {
@@ -44,22 +32,38 @@ export default () => {
           <TouchableWithoutFeedback
             style={styles.container}
             onPress={Keyboard.dismiss}>
-            <Input value={state.text} onChangeText={e => actions.setText(e)} />
+            <View style={styles.inputContainer}>
+              <Input
+                value={state.text}
+                onChangeText={e => actions.setText(e)}
+              />
+              <Button
+                style={styles.inputBtn}
+                size="small"
+                accessoryLeft={<Icon name="volume-up" />}
+                onPress={() => actions.readText()}
+              />
+            </View>
             <View>
               <Button
-                style={styles.speak}
-                accessoryLeft={<Icon name="volume-up" />}
-                onPress={() => actions.readText()}>
-                {I18n.t('Speak')}
-              </Button>
-              <Button
-                style={styles.goHome}
-                accessoryLeft={<Icon name="home" />}
+                style={styles.btn}
+                accessoryLeft={<Icon name="mic" />}
                 onPress={() => navigation.push('Listen')}>
                 {I18n.t('GoListen')}
               </Button>
-              <Button onPress={() => Linking.openURL(`tel:911`)}>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <Button
+                style={[styles.btn, styles.helpBtn]}
+                accessoryLeft={<Icon name="phone" />}
+                onPress={() => Linking.openURL(`tel:911`)}>
                 call 911
+              </Button>
+              <Button
+                style={[styles.btn, styles.helpBtn]}
+                accessoryLeft={<Icon name="navigation-2" />}
+                onPress={() => Linking.openURL('geo:0,0?q=hospitals')}>
+                hospitals
               </Button>
             </View>
           </TouchableWithoutFeedback>
@@ -75,14 +79,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   text: {
+    flex: 1,
     textAlign: 'center',
   },
-  speak: {
+  inputBtn: {
+    paddingVertical: 10,
+    marginLeft: 10,
+  },
+  btn: {
     marginVertical: 16,
   },
-  goHome: {
-    marginVertical: 16,
-    paddingHorizontal: 20,
+  helpBtn: {
+    flex: 1,
+    marginHorizontal: 10,
   },
 });
