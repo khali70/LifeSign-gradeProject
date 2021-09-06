@@ -22,40 +22,41 @@ type state = {
   text: string;
 };
 const useTts = () => {
-  const [state, setState] = useState<state>(() => ({
-    voices: [],
-    ttsStatus: 'initializing',
-    selectedVoice: null,
-    speechRate: 0.5,
-    speechPitch: 1,
-    text: '',
-  }));
+  const [voices, setVoices] = useState<state['voices']>([]);
+  const [ttsStatus, setTtsStatus] =
+    useState<state['ttsStatus']>('initializing');
+  const [selectedVoice, setSelectedVoice] =
+    useState<state['selectedVoice']>(null);
+  const [speechRate, setSpeechRate] = useState<state['speechRate']>(0.5);
+  const [speechPitch, setSpeechPitch] = useState<state['speechPitch']>(1);
+  const [text, setText] = useState<state['text']>('');
   useEffect(() => {
-    Tts.addEventListener('tts-start', event =>
-      setState({...state, ttsStatus: 'started'}),
-    );
-    Tts.addEventListener('tts-finish', event =>
-      setState({...state, ttsStatus: 'finished'}),
-    );
-    Tts.addEventListener('tts-cancel', event =>
-      setState({...state, ttsStatus: 'cancelled'}),
-    );
-    Tts.setDefaultRate(state.speechRate);
-    Tts.setDefaultPitch(state.speechPitch);
-    Tts.getInitStatus().then(initTts);
+    // console.log('first effect');
+    Tts.addEventListener('tts-start', event => setTtsStatus('started'));
+    Tts.addEventListener('tts-finish', event => setTtsStatus('finished'));
+    Tts.addEventListener('tts-cancel', event => setTtsStatus('cancelled'));
   }, []);
+  useEffect(() => {
+    // console.log('second effect');
+    initTts(); //.then(() =>  console.log('after initTts'));
+  }, []);
+
+  useEffect(() => {
+    Tts.setDefaultRate(speechRate);
+  }, [speechRate]);
+  useEffect(() => {
+    Tts.setDefaultPitch(speechPitch);
+  }, [speechPitch]);
+  // useEffect(() => {}, [voices]);
+  // useEffect(() => {}, [selectedVoice]);
+  // useEffect(() => {}, [ttsStatus]);
+  // useEffect(() => {}, [text]);
+
   const initTts = async () => {
     const voices = await Tts.voices();
     const availableVoices = voices
       .filter(v => !v.networkConnectionRequired && !v.notInstalled)
       .map(v => {
-        if (
-          v.id.includes('ar') ||
-          v.name.includes('ar') ||
-          v.language.includes('ar')
-        ) {
-          // console.log(v.id, v.name, v.language);
-        }
         return {id: v.id, name: v.name, language: v.language};
       });
 
@@ -69,40 +70,20 @@ const useTts = () => {
         console.log(`setDefaultLanguage error `, err);
       }
       await Tts.setDefaultVoice(voices[0].id);
-      setState({
-        ...state,
-        voices: availableVoices,
-        selectedVoice,
-        ttsStatus: 'initialized',
-      });
+      setVoices(availableVoices);
+      setSelectedVoice(selectedVoice);
+      setTtsStatus('initialized');
     } else {
-      setState({...state, ttsStatus: 'initialized'});
+      setTtsStatus('initialized');
     }
   };
 
   /**
    * the action of reading the text
    */
-  const readText = async (text?: string) => {
+  const readText = async (readText?: string) => {
     await Tts.stop();
-    Tts.speak(text || state.text);
-  };
-  /**
-   * TODO: check the documentation
-   * set default voice rate to given `rate`
-   * @param rate voice rate from 0.1 to 0.99
-   */
-  const setSpeechRate = async (rate: number) => {
-    await Tts.setDefaultRate(rate);
-    setState({...state, speechRate: rate});
-  };
-  /**
-   * set default pitch speed to given `rate`
-   * @param rate voice Pitch form 0.5 to 2
-   */
-  const setSpeechPitch = async (rate: number) => {
-    await Tts.setDefaultPitch(rate);
-    setState({...state, speechPitch: rate});
+    Tts.speak(readText || text);
   };
   /**
    * chang default voice to default voice
@@ -116,10 +97,7 @@ const useTts = () => {
       console.log(`setDefaultLanguage error `, err);
     }
     await Tts.setDefaultVoice(voice.id);
-    setState({...state, selectedVoice: voice.id});
-  };
-  const setText = (newText: string) => {
-    setState({...state, text: newText});
+    setSelectedVoice(voice.id);
   };
   const actions = {
     onVoicePress,
@@ -127,6 +105,15 @@ const useTts = () => {
     setSpeechPitch,
     setSpeechRate,
   };
-  return {state, actions};
+  return {
+    state: {voices, selectedVoice, text, speechPitch, speechRate, ttsStatus},
+    actions: {
+      onVoicePress,
+      readText,
+      setSpeechPitch,
+      setSpeechRate,
+      setText,
+    },
+  };
 };
 export default useTts;
