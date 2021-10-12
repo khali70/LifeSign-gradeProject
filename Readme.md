@@ -7,19 +7,28 @@
   - [ ] [settings](#settings)
   - [ ] bluetooth connect screen
   - [ ] drawer navigation
-- [ ] validate bluetooth lib
+- [x] validate bluetooth lib
+- [ ] use native naivgation header with theme api from expo
+
+```js
+screenOptions={{
+  headerTintColor: theme["text-basic-color"],
+  headerStyle: {
+    backgroundColor: theme["background-basic-color-2"],
+  },
+```
 
 ## settings
 
 - [x] redux support
 - [ ] settings screen
-- [ ] theme
+- [x] theme
 - [ ] tts lang
 - [x] local lang
 
 # future work :rocket:
 
-- [ ] langue support
+- [x] langue support
   - [ ] force rtl
   - [ ] translate app when finished
 - [ ] tts arabic
