@@ -17,8 +17,8 @@ export default () => {
     icon?: JSX.Element;
   }[];
   const screens: screen = [
-    {name: 'Listening Mod', route: 'Listen', icon: <Icon name="volume-up" />},
-    {name: 'Speaking mod', route: 'Speak', icon: <Icon name="mic" />},
+    {name: 'Listening Mod', route: 'Listen', icon: <Icon name="mic" />},
+    {name: 'Speaking mod', route: 'Speak', icon: <Icon name="volume-up" />},
     {name: 'About us', route: 'About', icon: <Icon name="info" />},
     {name: 'Help', route: 'Help', icon: <Icon name="question-mark-circle" />},
   ];
