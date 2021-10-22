@@ -36,3 +36,32 @@ screenOptions={{
 ## settings
 
 - [ ] custom theme picker
+
+## get paired devices
+
+```js
+const getPairedDevices = async () => {
+  console.log('DeviceListScreen::getBondedDevices');
+  try {
+    const bonded = await RNBluetoothClassic.getBondedDevices();
+    bonded.forEach(dev => {
+      console.log(dev.name + '   ' + dev.address);
+    });
+    setDevices(bonded);
+  } catch (error) {
+    setDevices([]);
+  }
+};
+
+// components
+<>
+  <Button onPress={getPairedDevices}>search for Paired device</Button>
+  {Devices.map((dev, id) => (
+    <Layout level="2">
+      <Text>
+        name : {dev.name} with address : {dev.address}
+      </Text>
+    </Layout>
+  ))}
+</>;
+```

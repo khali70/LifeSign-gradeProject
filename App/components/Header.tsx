@@ -3,7 +3,7 @@ import {Icon, TopNavigationAction} from '@ui-kitten/components';
 import {useNavigation} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-export const LeftIcon: React.FC<{name?: string}> = ({name}) => {
+export const BackIcon: React.FC<{name?: string}> = ({name}) => {
   const navigation = useNavigation();
   return (
     <TopNavigationAction

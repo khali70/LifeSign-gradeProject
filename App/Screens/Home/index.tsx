@@ -4,9 +4,16 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {Button, Icon, Layout, Text} from '@ui-kitten/components';
+import {
+  Button,
+  Icon,
+  Layout,
+  Text,
+  TopNavigationAction,
+} from '@ui-kitten/components';
 import I18n from '../../i18n';
 import Warper from '../../components/HeaderWarper';
+import {Info} from '../../components/Header';
 
 export default () => {
   const navigation =
@@ -23,7 +30,15 @@ export default () => {
     {name: 'Help', route: 'Help', icon: <Icon name="question-mark-circle" />},
   ];
   return (
-    <Warper title={I18n.t('Listen')} root>
+    <Warper
+      title={I18n.t('Listen')}
+      accessoryRight={
+        <TopNavigationAction
+          icon={<Icon name="bluetooth" />}
+          onPress={() => navigation.push('Bluetooth')}
+        />
+      }
+      accessoryLeft={<Info />}>
       <Layout style={styles.container}>
         <View style={styles.mainView}>
           {screens.map((screen, id) => (

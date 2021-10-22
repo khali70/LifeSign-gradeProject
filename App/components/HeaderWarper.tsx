@@ -1,16 +1,26 @@
 import React from 'react';
 import {Divider, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView} from 'react-native';
-import {Info, LeftIcon} from './Header';
-type props = {title: string; root?: boolean};
-const Warper: React.FC<props> = ({children, title, root = false}) => {
+import {RenderProp} from '@ui-kitten/components/devsupport';
+type props = {
+  title: string;
+  root?: boolean;
+  accessoryLeft?: RenderProp<{[key: string]: any}> | undefined;
+  accessoryRight?: RenderProp<{[key: string]: any}> | undefined;
+};
+const Warper: React.FC<props> = ({
+  children,
+  title,
+  accessoryLeft,
+  accessoryRight,
+}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <TopNavigation
         title={title}
         alignment="center"
-        accessoryLeft={!root ? <LeftIcon /> : undefined}
-        accessoryRight={root ? <Info /> : undefined}
+        accessoryLeft={accessoryLeft}
+        accessoryRight={accessoryRight}
       />
       <Divider />
       {children}

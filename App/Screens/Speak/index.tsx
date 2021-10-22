@@ -3,9 +3,9 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {Button, Icon, Input, Layout} from '@ui-kitten/components';
 import React from 'react';
 import {
+  Dimensions,
   Keyboard,
   KeyboardAvoidingView,
-  Linking,
   Platform,
   StyleSheet,
   View,
@@ -15,65 +15,70 @@ import Warper from '../../components/HeaderWarper';
 import I18n from '../../i18n';
 import useTts from './useTts';
 
-export default () => {
+const Speak = () => {
   const {state, actions} = useTts();
-  React.useEffect(() => {
-    actions.setText('type the text you want to say here');
-  }, []);
+  React.useEffect(() => {}, []);
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
   // BUG width chang with text view
   return (
     <Warper title={I18n.t('Speak')}>
-      <Layout style={styles.container}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <TouchableWithoutFeedback
-            style={styles.container}
-            onPress={Keyboard.dismiss}>
-            <View style={styles.inputContainer}>
+      <KeyboardAvoidingView
+        style={[styles.keyboard]}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <TouchableWithoutFeedback
+          style={[styles.touchView]}
+          onPress={Keyboard.dismiss}>
+          <Layout style={[styles.layout]}>
+            <View style={styles.container}>
               <Input
                 value={state.text}
+                style={styles.text}
+                placeholder="type text here to speak ..."
+                multiline
+                numberOfLines={5}
                 onChangeText={e => actions.setText(e)}
               />
               <Button
                 style={styles.inputBtn}
-                size="small"
                 accessoryLeft={<Icon name="volume-up" />}
-                onPress={() => actions.readText()}
-              />
+                onPress={() => actions.readText()}>
+                Speak
+              </Button>
             </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-      </Layout>
+          </Layout>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Warper>
   );
 };
-
+export default Speak;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
-  inputContainer: {
-    flexDirection: 'row',
+  layout: {
+    flex: 1,
+  },
+  keyboard: {
+    flex: 1,
+    backgroundColor: 'green',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  touchView: {
+    flex: 1,
+    backgroundColor: '#f000ff',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    minWidth: Dimensions.get('window').width,
+    minHeight: 50,
   },
   text: {
-    flex: 1,
-    textAlign: 'center',
+    minHeight: 50,
   },
   inputBtn: {
-    paddingVertical: 10,
-    marginLeft: 10,
-  },
-  btn: {
-    marginVertical: 16,
-  },
-  helpBtn: {
-    flex: 1,
-    marginHorizontal: 10,
+    alignSelf: 'flex-end',
   },
 });

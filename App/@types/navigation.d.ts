@@ -4,4 +4,5 @@ type HomeStackPrams = {
   About: undefined;
   Speak: undefined;
   Help: undefined;
+  Bluetooth: undefined;
 };
