@@ -9,6 +9,7 @@
   - [ ] drawer navigation
 - [x] validate bluetooth lib
 - [ ] use native naivgation header with theme api from expo
+- [x] work with eng.Doaa on github
 
 ```js
 screenOptions={{
