@@ -14,6 +14,8 @@ import {
 import I18n from '../../i18n';
 import Warper from '../../components/HeaderWarper';
 import {Info} from '../../components/Header';
+import { useSelector } from 'react-redux';
+import store from '../../Redux/store';
 
 export default () => {
   const navigation =
@@ -29,6 +31,9 @@ export default () => {
     {name: 'About us', route: 'About', icon: <Icon name="info" />},
     {name: 'Help', route: 'Help', icon: <Icon name="question-mark-circle" />},
   ];
+  // BUG need to sleep fix later 
+  type RootState = ReturnType<typeof store.getState>;
+  const msg = useSelector<RootState,string>(state => state.bluetooth['msg'])
   return (
     <Warper
       title={I18n.t('Listen')}
