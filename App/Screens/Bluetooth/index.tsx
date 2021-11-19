@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PermissionsAndroid, StyleSheet} from 'react-native';
+import {PermissionsAndroid, StyleSheet,ScrollView, Dimensions, GestureResponderEvent} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -15,7 +15,7 @@ import I18n from '../../i18n';
 import Warper from '../../components/HeaderWarper';
 import {BackIcon} from '../../components/Header';
 import RNBluetoothClassic, {
-  BluetoothDevice,
+  BluetoothDevice, BluetoothEventSubscription,
 } from 'react-native-bluetooth-classic';
 
 export default () => {
@@ -63,17 +63,24 @@ export default () => {
   };
 
   const searchDevices = async () => {
+    console.clear();
     console.log('DeviceListScreen::getBondedDevices');
     try {
       const hasPermission = await requestAccessFineLocationPermission();
       if (!hasPermission)
         throw Error('user refused to give permission of fine access location');
+      if(searching){
+        await RNBluetoothClassic.cancelDiscovery();
+        setSearching(false);
+      }else{
       setSearching(true);
       const devices = await RNBluetoothClassic.startDiscovery();
-      const pairedDevices = await RNBluetoothClassic.getBondedDevices();
-      setSearching(false);
       setDevices([...devices]);
-      setPairedDev([...pairedDevices]);
+      // TODO new function for paired dev
+      // const pairedDevices = await RNBluetoothClassic.getBondedDevices();
+      // setPairedDev([...pairedDevices]);
+      setSearching(false);
+      }
     } catch (error) {
       setDevices([]);
       console.error(error);
@@ -98,13 +105,13 @@ export default () => {
       }>
       <Layout style={styles.container}>
         {isBluetoothEnabled ? (
-          <>
+          <ScrollView style={{minHeight:Dimensions.get('window').height,minWidth:Dimensions.get('window').width}}>
             <ListDevices list={PairedDev} title="Paired Devices" />
             <ListDevices list={Devices} title="Available Devices" />
-          </>
+          </ScrollView>
         ) : (
           <>
-            <Text category="h3 ">Bluetooth is Disabled</Text>
+            <Text category="h3">Bluetooth is Disabled</Text>
             <Button
               onPress={() => RNBluetoothClassic.requestBluetoothEnabled()}>
               Enable Bluetooth
@@ -115,11 +122,30 @@ export default () => {
     </Warper>
   );
 };
-
+/**
+ * ! button ui => set to Aya
+ * ! filter bounded Dev Paired && Connected 
+ * 
+ */
 const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
   list,
   title = 'Available Devices',
-}) => (
+}) => {
+  const connectDev:
+  (e:GestureResponderEvent,dev:BluetoothDevice)=>Promise<false | BluetoothEventSubscription>  
+  = async (e,dev)=>{    
+    if( !await dev.isConnected()){
+      const connected = await dev.connect();
+      console.log(connected ? "connected successfully":"failed to connect");
+      if(!connected) return false;      
+    }
+    console.clear();
+    const BReadSubscription = dev.onDataReceived(({data,device})=>{
+        console.log(`${data}`);
+      })
+    return BReadSubscription;
+  }
+  return (
   <>
     {list.length > 0 && (
       <>
@@ -129,15 +155,20 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
           {title}
         </Text>
         {list.map((dev, id) => (
-          <Layout level="2" key={id.toString()} style={styles.device}>
+          <Layout level="2" key={id.toString()} style={styles.device} >
             <Text category="h5">{dev.name}</Text>
             <Text>{dev.address}</Text>
+            <Button onPress={e=> {
+              connectDev(e,dev)
+              //TODO rssi signal strength max -41db min -71db
+              }}>connect</Button>
           </Layout>
         ))}
       </>
     )}
   </>
-);
+)
+};
 
 const styles = StyleSheet.create({
   container: {
