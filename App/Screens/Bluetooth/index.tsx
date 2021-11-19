@@ -17,6 +17,7 @@ import {BackIcon} from '../../components/Header';
 import RNBluetoothClassic, {
   BluetoothDevice, BluetoothEventSubscription,
 } from 'react-native-bluetooth-classic';
+import { useDispatch } from 'react-redux';
 
 export default () => {
   // TODO get route and navigation name
@@ -131,6 +132,7 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
   list,
   title = 'Available Devices',
 }) => {
+  const dispatch = useDispatch()
   const connectDev:
   (e:GestureResponderEvent,dev:BluetoothDevice)=>Promise<false | BluetoothEventSubscription>  
   = async (e,dev)=>{    
@@ -159,7 +161,13 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
             <Text category="h5">{dev.name}</Text>
             <Text>{dev.address}</Text>
             <Button onPress={e=> {
-              connectDev(e,dev)
+              // connectDev(e,dev).then(eve=>{
+              //   if(eve){
+                  
+              //   }
+              // })
+              //BUG need to sleep fix later
+              dispatch({type:'B',payload:'this is test'});
               //TODO rssi signal strength max -41db min -71db
               }}>connect</Button>
           </Layout>
