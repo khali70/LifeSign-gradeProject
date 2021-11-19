@@ -20,7 +20,6 @@ const Speak = () => {
   React.useEffect(() => {}, []);
   const navigation =
     useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
-  // BUG width chang with text view
   return (
     <Warper title={I18n.t('Speak')}>
       <KeyboardAvoidingView
