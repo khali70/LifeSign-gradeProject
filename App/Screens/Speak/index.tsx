@@ -11,8 +11,8 @@ import {
   View,
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import Warper from '../../components/HeaderWarper';
-import I18n from '../../i18n';
+import Warper from '@components/HeaderWarper';
+import I18n from '@i18n';
 import useTts from './useTts';
 
 const Speak = () => {

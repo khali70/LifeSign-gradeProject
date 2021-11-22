@@ -12,8 +12,8 @@ import {
   Text,
   TopNavigation,
 } from '@ui-kitten/components';
-import I18n from '../../i18n';
-import Warper from '../../components/HeaderWarper';
+import I18n from '@i18n';
+import Warper from '@components/HeaderWarper';
 
 export default () => {
   const navigation =

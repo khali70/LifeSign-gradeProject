@@ -1,4 +1,4 @@
-import { Actions } from "../@types/redux";
+import { Actions } from "@types/redux";
 
 const INITIAL_STATE = {
   BReadSubscription:null,

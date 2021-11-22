@@ -11,11 +11,11 @@ import {
   Text,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import I18n from '../../i18n';
-import Warper from '../../components/HeaderWarper';
-import {Info} from '../../components/Header';
+import I18n from '@i18n';
+import Warper from '@components/HeaderWarper';
+import {Info} from '@components/Header';
 import { useSelector } from 'react-redux';
-import store from '../../Redux/store';
+import store from '@Redux/store';
 
 export default () => {
   const navigation =

@@ -11,14 +11,14 @@ import {
   Text,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import I18n from '../../i18n';
-import Warper from '../../components/HeaderWarper';
-import {BackIcon} from '../../components/Header';
+import I18n from '@i18n';
+import Warper from '@components/HeaderWarper';
+import {BackIcon} from '@components/Header';
 import RNBluetoothClassic, {
   BluetoothDevice, BluetoothEventSubscription,
 } from 'react-native-bluetooth-classic';
 import { useDispatch } from 'react-redux';
-import { BConnect, receiveData } from '../../Redux/action';
+import { BConnect, receiveData } from '@Redux/action';
 
 type props = StackScreenProps<HomeStackPrams,'Bluetooth'>;
 export default ({route,navigation}:props) => {

@@ -9,7 +9,16 @@
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["App/components/*"],
+      "@Redux/*":["App/Redux/*"],
+      "@Screens/*":["App/Screens/*"],
+      "@i18n/*":["App/i18n/*"],
+      "@Navigation/*":["App/Navigation/*"],
+      "@types/*":["App/@types/*"],
+    },
   },
   "exclude": [
     "node_modules",

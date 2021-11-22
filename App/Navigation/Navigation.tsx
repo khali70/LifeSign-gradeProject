@@ -3,7 +3,12 @@ import React from 'react';
 import {NavigationContainer, Theme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Home, About, Listen, Help, Speak, Bluetooth} from '../Screens';
+import Home from '@Screens/Home' 
+import About from '@Screens/AboutUs' 
+import Listen from '@Screens/Listen' 
+import Help from '@Screens/Help' 
+import Speak from '@Screens/Speak' 
+import Bluetooth from '@Screens/Bluetooth'
 
 const HomeStack = createStackNavigator<HomeStackPrams>();
 const HomeStackNavigator: React.FC<{}> = () => (

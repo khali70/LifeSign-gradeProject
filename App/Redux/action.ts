@@ -1,4 +1,4 @@
-import { bReadEvent,data } from "../@types/redux";
+import { bReadEvent,data } from "@types/redux";
 
 // TODO ts enums 
 export const receiveData = (data:data) => (
