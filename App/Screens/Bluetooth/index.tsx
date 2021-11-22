@@ -18,6 +18,7 @@ import RNBluetoothClassic, {
   BluetoothDevice, BluetoothEventSubscription,
 } from 'react-native-bluetooth-classic';
 import { useDispatch } from 'react-redux';
+import { BConnect, receiveData } from '../../Redux/action';
 
 export default () => {
   // TODO get route and navigation name
@@ -143,9 +144,17 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
     }
     console.clear();
     const BReadSubscription = dev.onDataReceived(({data,device})=>{
-        console.log(`${data}`);
+        dispatch(receiveData({data,device}));
+        console.log(`${data}`); 
       })
     return BReadSubscription;
+  }
+  const getPercentage = (rssi:number)=>{
+    //rssi signal strength max -41db min -71db 
+    const top_value = -41;
+    const bottom_value = -71;
+    const range = top_value - bottom_value
+    const percent = (rssi - bottom_value) / range;
   }
   return (
   <>
@@ -161,14 +170,11 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
             <Text category="h5">{dev.name}</Text>
             <Text>{dev.address}</Text>
             <Button onPress={e=> {
-              // connectDev(e,dev).then(eve=>{
-              //   if(eve){
-                  
-              //   }
-              // })
-              //BUG need to sleep fix later
-              dispatch({type:'B',payload:'this is test'});
-              //TODO rssi signal strength max -41db min -71db
+              connectDev(e,dev).then(eve=>{
+                if(eve){
+                  dispatch(BConnect(eve));
+                }
+              })
               }}>connect</Button>
           </Layout>
         ))}

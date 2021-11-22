@@ -1,7 +1,9 @@
 import { combineReducers, createStore } from "redux";
 import bluetoothReducer from "./reducer";
-
-const store = createStore(combineReducers({
+type reducers = {
+  bluetooth:typeof bluetoothReducer;
+}
+const store = createStore(combineReducers<reducers>({
   bluetooth: bluetoothReducer,
 }))
 export default store;

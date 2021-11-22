@@ -31,7 +31,6 @@ export default () => {
     {name: 'About us', route: 'About', icon: <Icon name="info" />},
     {name: 'Help', route: 'Help', icon: <Icon name="question-mark-circle" />},
   ];
-  // BUG need to sleep fix later 
   type RootState = ReturnType<typeof store.getState>;
   const msg = useSelector<RootState,string>(state => state.bluetooth['msg'])
   return (

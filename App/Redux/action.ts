@@ -1,7 +1,16 @@
+import { bReadEvent,data } from "../@types/redux";
+
 // TODO ts enums 
-export const bluetoothRead = (data:string) => (
+export const receiveData = (data:data) => (
   {
-    type: 'ADD_FRIEND',
+    type: 'BluetoothDataReceived',
     payload: data,
-  }
+  } as const
+);
+
+export const BConnect =  (readEvent:bReadEvent) => (
+  {
+    type: 'BluetoothReadSubscription',
+    payload: readEvent,
+  } as const 
 );
