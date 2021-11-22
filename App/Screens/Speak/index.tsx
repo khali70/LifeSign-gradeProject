@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {Button, Icon, Input, Layout} from '@ui-kitten/components';
 import React from 'react';
 import {
@@ -12,16 +12,14 @@ import {
 } from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Warper from '@components/HeaderWarper';
-import I18n from '@i18n';
+import I18n from '@i18n/index';
 import useTts from './useTts';
 
-const Speak = () => {
+type props = StackScreenProps<HomeStackPrams,'Speak'>;
+const Speak = ({navigation,route}:props) => {
   const {state, actions} = useTts();
-  React.useEffect(() => {}, []);
-  const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
   return (
-    <Warper title={I18n.t('Speak')}>
+    <Warper title={I18n.t(route.name)}>
       <KeyboardAvoidingView
         style={[styles.keyboard]}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>

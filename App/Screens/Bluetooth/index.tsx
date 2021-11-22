@@ -11,7 +11,7 @@ import {
   Text,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import I18n from '@i18n';
+import I18n from '@i18n/index';
 import Warper from '@components/HeaderWarper';
 import {BackIcon} from '@components/Header';
 import RNBluetoothClassic, {
@@ -22,7 +22,6 @@ import { BConnect, receiveData } from '@Redux/action';
 
 type props = StackScreenProps<HomeStackPrams,'Bluetooth'>;
 export default ({route,navigation}:props) => {
-  // TODO get route and navigation name
   const [isBluetoothEnabled, setBluetoothEnabled] = React.useState(false);
   const [searching, setSearching] = React.useState(false);
   const [Devices, setDevices] = React.useState<BluetoothDevice[]>([]);
@@ -37,6 +36,7 @@ export default ({route,navigation}:props) => {
     const disabledSubscription = RNBluetoothClassic.onBluetoothDisabled(event =>
       setBluetoothEnabled(false),
     );
+    getPairedDevices()
     return () => {
       enabledSubscription.remove();
       disabledSubscription.remove();
@@ -63,7 +63,7 @@ export default ({route,navigation}:props) => {
     return granted === PermissionsAndroid.RESULTS.GRANTED;
   };
 
-  const searchDevices = async () => {
+  const getPairedDevices = async () => {
     console.clear();
     console.log('DeviceListScreen::getBondedDevices');
     try {
@@ -75,11 +75,10 @@ export default ({route,navigation}:props) => {
         setSearching(false);
       }else{
       setSearching(true);
-      const devices = await RNBluetoothClassic.startDiscovery();
-      setDevices([...devices]);
-      // TODO new function for paired dev
-      // const pairedDevices = await RNBluetoothClassic.getBondedDevices();
-      // setPairedDev([...pairedDevices]);
+      // const devices = await RNBluetoothClassic.startDiscovery();
+      // setDevices([...devices]);
+      const pairedDevices = await RNBluetoothClassic.getBondedDevices();
+      setPairedDev([...pairedDevices]);
       setSearching(false);
       }
     } catch (error) {
@@ -90,20 +89,9 @@ export default ({route,navigation}:props) => {
 
   return (
     <Warper
-      title={I18n.t('Bluetooth')}
+      title={I18n.t(route.name)}
       accessoryLeft={<BackIcon />}
-      accessoryRight={
-        <TopNavigationAction
-          icon={
-            searching ? (
-              <Icon name="close-outline" />
-            ) : (
-              <Icon name="maximize-outline" />
-            )
-          }
-          onPress={searchDevices}
-        />
-      }>
+     >
       <Layout style={styles.container}>
         {isBluetoothEnabled ? (
           <ScrollView style={{minHeight:Dimensions.get('window').height,minWidth:Dimensions.get('window').width}}>

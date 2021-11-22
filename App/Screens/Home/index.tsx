@@ -3,7 +3,7 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {
   Button,
   Icon,
@@ -11,15 +11,14 @@ import {
   Text,
   TopNavigationAction,
 } from '@ui-kitten/components';
-import I18n from '@i18n';
+import I18n from '@i18n/index';
 import Warper from '@components/HeaderWarper';
 import {Info} from '@components/Header';
 import { useSelector } from 'react-redux';
 import store from '@Redux/store';
 
-export default () => {
-  const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Home'>>();
+type props = StackScreenProps<HomeStackPrams,'Home'>;
+export default ({navigation,route}:props) => {
   type screen = {
     name: string;
     route: keyof HomeStackPrams;
@@ -35,7 +34,7 @@ export default () => {
   const msg = useSelector<RootState,string>(state => state.bluetooth['msg'])
   return (
     <Warper
-      title={I18n.t('Listen')}
+      title={I18n.t(route.name)}
       accessoryRight={
         <TopNavigationAction
           icon={<Icon name="bluetooth" />}

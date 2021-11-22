@@ -3,16 +3,15 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {Button, Icon, Layout, Text} from '@ui-kitten/components';
-import I18n from '@i18n';
+import I18n from '@i18n/index';
 import Warper from '@components/HeaderWarper';
 
-export default () => {
-  const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'About'>>();
+type props = StackScreenProps<HomeStackPrams,'About'>;
+export default ({navigation,route}:props) => {
   return (
-    <Warper title={I18n.t('Listen')}>
+    <Warper title={I18n.t(route.name)}>
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
           info screen

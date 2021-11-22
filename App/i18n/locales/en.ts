@@ -4,5 +4,7 @@ const en = {
   Speak: 'Speak',
   Listen: 'Listen',
   Bluetooth: 'Bluetooth',
+  About:'About',
+  Home:'Home',
 };
 export default en;

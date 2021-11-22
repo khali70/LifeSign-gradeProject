@@ -1,9 +1,11 @@
-import {i18nSchema} from '@types/i18n';
-
-const ar: i18nSchema = {
-  HWtitle: 'واجه الهارد وير',
-  GoListen: 'الشاشه الرئيسيه',
-  Speak: 'تحدث',
-  Listen: '',
+import en from './en'
+const ar: Partial<typeof en> = {
+  HWtitle: 'هاردوير',
+  GoListen: 'الذهاب للسماع',
+  Speak: 'التحدث',
+  Listen: 'السماع',
+  Bluetooth: 'البلوتوث',
+  About:'عنا',
+  Home:'الرئيسيه',
 };
 export default ar;

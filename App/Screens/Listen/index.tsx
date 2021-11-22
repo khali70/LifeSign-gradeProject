@@ -3,7 +3,7 @@ import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp, StackScreenProps} from '@react-navigation/stack';
 import {
   Button,
   Divider,
@@ -12,15 +12,13 @@ import {
   Text,
   TopNavigation,
 } from '@ui-kitten/components';
-import I18n from '@i18n';
+import I18n from '@i18n/index';
 import Warper from '@components/HeaderWarper';
 
-export default () => {
-  const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Listen'>>();
-  // TODO reset nav stack , add back icon
+type props = StackScreenProps<HomeStackPrams,'Listen'>;
+export default ({navigation,route}:props) => {
   return (
-    <Warper title={I18n.t('Listen')}>
+    <Warper title={I18n.t(route.name)}>
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
           Soon listen mod
