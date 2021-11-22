@@ -3,7 +3,7 @@ import React from 'react';
 import {PermissionsAndroid, StyleSheet,ScrollView, Dimensions, GestureResponderEvent} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {StackNavigationProp,StackScreenProps} from '@react-navigation/stack';
 import {
   Button,
   Icon,
@@ -20,10 +20,9 @@ import RNBluetoothClassic, {
 import { useDispatch } from 'react-redux';
 import { BConnect, receiveData } from '../../Redux/action';
 
-export default () => {
+type props = StackScreenProps<HomeStackPrams,'Bluetooth'>;
+export default ({route,navigation}:props) => {
   // TODO get route and navigation name
-  const navigation =
-    useNavigation<StackNavigationProp<HomeStackPrams, 'Bluetooth'>>();
   const [isBluetoothEnabled, setBluetoothEnabled] = React.useState(false);
   const [searching, setSearching] = React.useState(false);
   const [Devices, setDevices] = React.useState<BluetoothDevice[]>([]);

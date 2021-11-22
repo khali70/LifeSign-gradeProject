@@ -7,8 +7,10 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import {AppNavigator} from './Navigation/Navigation';
 import { Provider } from 'react-redux';
 import store from './Redux/store';
+import Reactotron from '../ReactotronConfig'
 
-export default ({}): React.ReactElement => {
+const MyApp=({}): React.ReactElement => {
+  
   return (
     <>
       <Provider store={store}>
@@ -20,6 +22,8 @@ export default ({}): React.ReactElement => {
     </>
   );
 };
+const MyAppWithBenefits = __DEV__ ? Reactotron.overlay(MyApp) : MyApp
+export default MyAppWithBenefits;
 /* 
 Theme = {
     dark: boolean;
