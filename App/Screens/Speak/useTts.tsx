@@ -31,14 +31,14 @@ const useTts = () => {
   const [speechPitch, setSpeechPitch] = useState<state['speechPitch']>(1);
   const [text, setText] = useState<state['text']>('');
   useEffect(() => {
-    // console.log('first effect');
+    // console.tron.log('first effect');
     Tts.addEventListener('tts-start', event => setTtsStatus('started'));
     Tts.addEventListener('tts-finish', event => setTtsStatus('finished'));
     Tts.addEventListener('tts-cancel', event => setTtsStatus('cancelled'));
   }, []);
   useEffect(() => {
-    // console.log('second effect');
-    initTts(); //.then(() =>  console.log('after initTts'));
+    // console.tron.log('second effect');
+    initTts(); //.then(() =>  console.tron.log('after initTts'));
   }, []);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const useTts = () => {
         await Tts.setDefaultLanguage(voices[0].language);
       } catch (err) {
         // My Samsung S9 has always this error: "Language is not supported"
-        console.log(`setDefaultLanguage error `, err);
+        console.tron.log(`setDefaultLanguage error `, err);
       }
       await Tts.setDefaultVoice(voices[0].id);
       setVoices(availableVoices);
@@ -94,7 +94,7 @@ const useTts = () => {
       await Tts.setDefaultLanguage(voice.language);
     } catch (err) {
       // My Samsung S9 has always this error: "Language is not supported"
-      console.log(`setDefaultLanguage error `, err);
+      console.tron.log(`setDefaultLanguage error `, err);
     }
     await Tts.setDefaultVoice(voice.id);
     setSelectedVoice(voice.id);

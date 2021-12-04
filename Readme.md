@@ -43,22 +43,22 @@ screenOptions={{
 ```js
 const performRead = async () => {
   try {
-    console.log('Polling for available messages');
+    console.tron.log('Polling for available messages');
     let available = await this.props.device.available();
-    console.log(`There is data available [${available}], attempting read`);
+    console.tron.log(`There is data available [${available}], attempting read`);
 
     if (available > 0) {
       for (let i = 0; i < available; i++) {
-        console.log(`reading ${i}th time`);
+        console.tron.log(`reading ${i}th time`);
         let data = await this.props.device.read();
 
-        console.log(`Read data ${data}`);
-        console.log(data);
+        console.tron.log(`Read data ${data}`);
+        console.tron.log(data);
         this.onReceivedData({data});
       }
     }
   } catch (err) {
-    console.log(err);
+    console.tron.log(err);
   }
 };
 ```

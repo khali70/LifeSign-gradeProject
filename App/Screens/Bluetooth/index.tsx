@@ -25,7 +25,7 @@ export default ({route,navigation}:props) => {
   const [isBluetoothEnabled, setBluetoothEnabled] = React.useState(false);
   const [searching, setSearching] = React.useState(false);
   const [Devices, setDevices] = React.useState<BluetoothDevice[]>([]);
-  const [PairedDev, setPairedDev] = React.useState<BluetoothDevice[]>([]);
+  const [unPairedDev, setunPairedDev] = React.useState<BluetoothDevice[]>([]);
   React.useEffect(() => {
     RNBluetoothClassic.isBluetoothEnabled().then(enabled => {
       setBluetoothEnabled(enabled);
@@ -64,26 +64,22 @@ export default ({route,navigation}:props) => {
   };
 
   const getPairedDevices = async () => {
-    console.clear();
-    console.log('DeviceListScreen::getBondedDevices');
+    console.tron.log('DeviceListScreen::getBondedDevices');
     try {
       const hasPermission = await requestAccessFineLocationPermission();
       if (!hasPermission)
         throw Error('user refused to give permission of fine access location');
-      if(searching){
-        await RNBluetoothClassic.cancelDiscovery();
-        setSearching(false);
-      }else{
+      if(!searching){
       setSearching(true);
-      // const devices = await RNBluetoothClassic.startDiscovery();
-      // setDevices([...devices]);
-      const pairedDevices = await RNBluetoothClassic.getBondedDevices();
-      setPairedDev([...pairedDevices]);
+      const devices = (await RNBluetoothClassic.startDiscovery());
+
+      setDevices(devices.filter(dev=>dev.bonded));
+      setunPairedDev(devices.filter(dev=>!dev.bonded))
       setSearching(false);
       }
     } catch (error) {
       setDevices([]);
-      console.error(error);
+      console.tron.error(error);
     }
   };
 
@@ -95,8 +91,12 @@ export default ({route,navigation}:props) => {
       <Layout style={styles.container}>
         {isBluetoothEnabled ? (
           <ScrollView style={{minHeight:Dimensions.get('window').height,minWidth:Dimensions.get('window').width}}>
-            <ListDevices list={PairedDev} title="Paired Devices" />
+            {searching?<Text>searching...</Text>:(
+              <>
+              <ListDevices list={unPairedDev} title="unPaired Devices" />
             <ListDevices list={Devices} title="Available Devices" />
+            </>
+            )}
           </ScrollView>
         ) : (
           <>
@@ -126,13 +126,12 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
   = async (e,dev)=>{    
     if( !await dev.isConnected()){
       const connected = await dev.connect();
-      console.log(connected ? "connected successfully":"failed to connect");
+      console.tron.log(connected ? "connected successfully":"failed to connect");
       if(!connected) return false;      
     }
-    console.clear();
     const BReadSubscription = dev.onDataReceived(({data,device})=>{
         dispatch(receiveData({data,device}));
-        console.log(`${data}`); 
+        console.tron.log(`${data}`); 
       })
     return BReadSubscription;
   }
@@ -156,13 +155,14 @@ const ListDevices: React.FC<{list: BluetoothDevice[]; title?: string}> = ({
           <Layout level="2" key={id.toString()} style={styles.device} >
             <Text category="h5">{dev.name}</Text>
             <Text>{dev.address}</Text>
-            <Button onPress={e=> {
+            {dev.bonded&&<Button onPress={e=> {
+              console.tron.log(dev)
               connectDev(e,dev).then(eve=>{
                 if(eve){
                   dispatch(BConnect(eve));
                 }
               })
-              }}>connect</Button>
+              }}>connect</Button>}
           </Layout>
         ))}
       </>
