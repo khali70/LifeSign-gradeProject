@@ -28,14 +28,6 @@ const Speak = ({navigation,route}:props) => {
           onPress={Keyboard.dismiss}>
           <Layout style={[styles.layout]}>
             <View style={styles.container}>
-              <Input
-                value={state.text}
-                style={styles.text}
-                placeholder="type text here to speak ..."
-                multiline
-                numberOfLines={5}
-                onChangeText={e => actions.setText(e)}
-              />
               <Button
                 style={styles.inputBtn}
                 accessoryLeft={<Icon name="volume-up" />}

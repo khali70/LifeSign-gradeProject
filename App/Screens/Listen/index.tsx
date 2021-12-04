@@ -17,6 +17,10 @@ import Warper from '@components/HeaderWarper';
 
 type props = StackScreenProps<HomeStackPrams,'Listen'>;
 export default ({navigation,route}:props) => {
+  /**
+   * ! google speak to text
+   * ! load image to text
+   */
   return (
     <Warper title={I18n.t(route.name)}>
       <Layout style={styles.container}>
