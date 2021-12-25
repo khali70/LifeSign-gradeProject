@@ -18,6 +18,7 @@ import Voice from '@react-native-voice/voice';
 
 type props = StackScreenProps<HomeStackPrams,'Listen'>;
 export default ({navigation,route}:props) => {
+
   useEffect(() => {
     initFunction()
 }, []);
@@ -63,6 +64,12 @@ const initFunction =  async () =>{
      Voice.stop()
    },1000)
   }
+
+  /**
+   * ! google speak to text
+   * ! load image to text
+   */
+
   return (
     <Warper title={I18n.t(route.name)}>
       <Layout style={styles.container}>

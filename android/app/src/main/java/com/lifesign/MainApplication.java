@@ -4,7 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+
 import com.wenkesj.voice.VoicePackage;
+
+import com.zmxv.RNSound.RNSoundPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import net.no_mad.tts.TextToSpeechPackage;
 import com.facebook.react.ReactInstanceManager;
