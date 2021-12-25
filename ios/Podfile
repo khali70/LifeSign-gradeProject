@@ -16,6 +16,8 @@ target 'LifeSign' do
 
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
 
+  pod 'react-native-voice', :path => '../node_modules/@react-native-voice/voice'
+
   target 'LifeSignTests' do
     inherit! :complete
     # Pods for testing
