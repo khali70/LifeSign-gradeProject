@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "typeRoots": ["./App/@types", "."],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["es6"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["App/components/*"],
+      "@Redux/*": ["App/Redux/*"],
+      "@Screens/*": ["App/Screens/*"],
+      "@i18n/*": ["App/i18n/*"],
+      "@Navigation/*": ["App/Navigation/*"],
+      "_types/*": ["App/@types/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
+}
