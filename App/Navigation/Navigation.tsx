@@ -7,7 +7,7 @@ import Home from "@Screens/Home";
 import About from "@Screens/AboutUs";
 import Listen from "@Screens/Listen";
 import Help from "@Screens/Help";
-import Speak from "@Screens/Speak";
+import Speak from "@Screens/HW";
 import Bluetooth from "@Screens/Bluetooth";
 
 const HomeStack = createStackNavigator<HomeStackPrams>();
