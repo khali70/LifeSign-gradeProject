@@ -5,7 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 //Fix convert default export to named exports
 import Home from "@Screens/Home";
 import About from "@Screens/AboutUs";
-import Listen from "@Screens/Listen";
+import Listen from "@Screens/SW";
 import Help from "@Screens/Help";
 import Speak from "@Screens/HW";
 import Bluetooth from "@Screens/Bluetooth";

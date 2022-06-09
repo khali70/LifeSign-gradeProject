@@ -17,7 +17,7 @@ import Voice, {
   SpeechStartEvent,
   SpeechEndEvent,
   SpeechResultsEvent,
-} from "@react-native-voice/voice";
+} from "@react-native-community/voice";
 import SignsViews from "./SignsView";
 import { getDownloadUrl, getSigns } from "@components/DB";
 
